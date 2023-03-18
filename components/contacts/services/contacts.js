@@ -1,17 +1,20 @@
-const {addContact, findAllContacts, findContacts} = require("../view/contacts");
+const { findAllContacts, findContacts, Contacts } = require("../view/contacts");
 
-exports.createContact = (contact) =>{
-    let {contactName, userId, contactInfo,contactId} = contact;
-    // console.log(contactName, contactInfo, userId, contactId);
-    // console.log(contact);
-    return addContact({contactId, contactName, contactInfo:contactInfo?contactInfo:[], userId});
-}
+exports.createContact = async (contact) => {
+  console.log("inside cotact service");
+  return await contact.addContact();
+};
 
-exports.getAllContacts = () =>{
-    return findAllContacts();
-}
+exports.updateContact = async (contactId, userId, contacts) => {
+  const updatedContacts = contacts.modifyContact(contactId, userId);
+  return updatedContacts;
+};
 
-exports.getContacts = (userId) =>{
-    console.log({userId});
-    return findContacts(userId);
-}
+exports.getAllContacts = () => {
+  return findAllContacts();
+};
+
+exports.getContacts = async (userId) => {
+  const contacts = await Contacts.findContacts(userId);
+  return contacts;
+};
